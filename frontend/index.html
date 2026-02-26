@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskFlow – Codveda Task Manager</title>
+  <meta name="description" content="A modern task manager built with the PERN stack – PostgreSQL, Express, React, Node.js. Created for Codveda Full Stack Internship." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ─── Navbar ──────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="nav-logo">✦</span>
+      <span>TaskFlow</span>
+    </div>
+    <div class="nav-info">
+      <span id="navStatus" class="nav-status">Ready</span>
+    </div>
+  </nav>
+
+  <!-- ─── Main Container ──────────────────────────────── -->
+  <main class="container">
+
+    <!-- Hero heading -->
+    <header class="page-header">
+      <h1>My Task Board</h1>
+      <p class="subtitle">Stay organised. Stay productive.</p>
+    </header>
+
+    <!-- Stats row -->
+    <section class="stats-row" id="statsRow" aria-label="Task statistics">
+      <div class="stat-card">
+        <span class="stat-number" id="statTotal">0</span>
+        <span class="stat-label">Total</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="statPending">0</span>
+        <span class="stat-label">Pending</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="statDone">0</span>
+        <span class="stat-label">Completed</span>
+      </div>
+    </section>
+
+    <!-- Add task form -->
+    <section class="add-task-card" aria-label="Add a new task">
+      <h2 class="section-title">Add New Task</h2>
+      <form class="add-form" id="addForm" onsubmit="handleAddTask(event)">
+        <input
+          type="text"
+          id="taskInput"
+          class="task-input"
+          placeholder="What do you need to get done?"
+          required
+          autocomplete="off"
+          maxlength="255"
+        />
+        <button type="submit" class="btn btn-primary" id="addBtn">
+          <span>+ Add Task</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- Filter bar -->
+    <section class="filter-bar" aria-label="Filter tasks">
+      <button class="filter-btn active" id="filterAll"       onclick="setFilter('all')"      >All</button>
+      <button class="filter-btn"        id="filterPending"   onclick="setFilter('pending')"  >Pending</button>
+      <button class="filter-btn"        id="filterCompleted" onclick="setFilter('completed')">Completed</button>
+    </section>
+
+    <!-- Loading / error feedback -->
+    <div class="feedback-bar" id="feedbackBar" role="alert" aria-live="polite"></div>
+
+    <!-- Task list -->
+    <section class="task-section" aria-label="Task list">
+      <ul class="task-list" id="taskList"></ul>
+      <div class="empty-state" id="emptyState" hidden>
+        <div class="empty-icon">📋</div>
+        <p>No tasks here. Add one above!</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ─── Edit modal ──────────────────────────────────── -->
+  <div class="modal-overlay" id="modalOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <h3 id="modalTitle">Edit Task</h3>
+      <input type="text" id="editInput" class="task-input" placeholder="Update task title…" maxlength="255" />
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary"   onclick="saveEdit()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
